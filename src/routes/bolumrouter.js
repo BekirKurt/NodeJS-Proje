@@ -2,8 +2,8 @@ const Bolum = require('../models/bolum.js');
 const express = require('express');
 const App = express();
 
-App.listen(3000, () => {
-    console.log(`Sunucu ${3000}} numaralı porta başarıyla bağlandı.`);
+App.listen(process.env.PORT1, () => {
+    console.log(`Sunucu ${process.env.PORT1} numaralı porta başarıyla bağlandı.`);
 });
 
 App.use(express.json())
@@ -11,7 +11,6 @@ App.use(express.json())
 App.post('/bolum', async (req, res) => {
     try {
         const { name } = req.body;
-
         if (!name) {
             return res.status(400).send('Lütfen tüm değerleri giriniz');
         }

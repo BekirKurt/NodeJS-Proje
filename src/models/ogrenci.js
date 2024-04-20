@@ -23,7 +23,10 @@ const Ogrenci = db.define('ogrenci', {
     },
     counter: {
         type: Sequelize.INTEGER,
-    },
+    }
+
+}, {
+    timestamps: false
 })
 
 Ogrenci.belongsTo(Bolum, { foreignKey: 'dept_id', onDelete: 'cascade' })

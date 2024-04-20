@@ -11,6 +11,8 @@ const Bolum = db.define('bolum', {
         type: Sequelize.STRING,
 
     },
+}, {
+    timestamps: false
 })
 
 module.exports = Bolum

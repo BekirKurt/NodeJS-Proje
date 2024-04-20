@@ -1,12 +1,29 @@
+const db = require('../config/db.js');
 const Ogrenci = require('../models/ogrenci.js');
+const Sayac = require('../models/ogrenciSayac.js')
 const express = require('express');
 const App = express();
+require('dotenv').config();
 
-App.listen(4000, () => {
-    console.log(`Sunucu ${4000} numaralı porta başarıyla bağlandı.`);
+App.listen(process.env.PORT2, () => {
+    console.log(`Sunucu ${process.env.PORT2} numaralı porta başarıyla bağlandı.`);
 });
 
 App.use(express.json())
+
+db.afterCreate('afterCreate', async (instance) => {
+    if (instance instanceof Ogrenci) {
+        await db.query('UPDATE ogrencisayacs SET sayac = sayac + 1');
+        //await ogrencisayac.increment('sayac', { by: 1, where: { id: 1 } });
+    }
+});
+
+db.afterDestroy('afterDestroy', async (instance) => {
+    if (instance instanceof Ogrenci) {
+        await db.query('UPDATE ogrencisayacs SET sayac = sayac -1');
+        //await ogrencisayac.decrement('sayac', { by: 1, where: { id: 1 } });
+    }
+})
 
 App.post('/ogrenci', async (req, res) => {
     try {
@@ -38,6 +55,9 @@ App.delete('/ogrenci', async (req, res) => {
         }
 
         await ogrenci.destroy()
+        Sayac.afterDestroy(async () => {
+            await Sayac.decrement('sayac');
+        });
         res.status(200).json({ message: 'Kullanıcı başarıyla silindi' });
 
     } catch (error) {
