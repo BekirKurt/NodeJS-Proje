@@ -1,16 +1,22 @@
 const Sequelize = require("sequelize");
 const db = require("../config/db.js");
 
-const Bolum = db.define(
-  "bolum",
+const User = db.define(
+  "user",
   {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    username: {
       type: Sequelize.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false,
     },
   },
   {
@@ -18,4 +24,4 @@ const Bolum = db.define(
   }
 );
 
-module.exports = Bolum;
+module.exports = User;

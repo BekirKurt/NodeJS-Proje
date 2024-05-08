@@ -1,14 +1,18 @@
-const Sequelize = require('sequelize')
-const db = require('../config/db.js')
+const Sequelize = require("sequelize");
+const db = require("../config/db.js");
 
-const ogrencisayac = db.define('ogrencisayac', {
+const ogrencisayac = db.define(
+  "ogrencisayac",
+  {
     sayac: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
     },
-}, {
-    timestamps: false
-})
+  },
+  {
+    timestamps: false,
+  }
+);
 
-module.exports = ogrencisayac
+module.exports = ogrencisayac;
